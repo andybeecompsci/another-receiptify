@@ -6,6 +6,8 @@ interface Track {
   topTrack?: string;
 }
 
+import { ShareButton } from './share-button'
+
 export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Track[] }) {
   if (!tracks?.length) return null;
 
@@ -37,70 +39,76 @@ export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Tr
   };
 
   return (
-    <div className="w-[95%] max-w-[400px] bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl">
-      <div className="relative overflow-hidden p-6 md:p-8 font-[var(--font-space-mono)]">
-        {/* Header */}
-        <div className="text-center border-b border-dashed pb-6">
-          <h1 className="text-2xl font-bold mb-2">ANOTHER RECEIPTIFY</h1>
-          <p className="text-base">Order #{orderNumber}</p>
-          <p className="text-sm mt-3">{today}</p>
-          <p className="text-sm">{time}</p>
-          <p className="text-sm mt-3 font-bold">{getPeriodText(timeRange)}</p>
-        </div>
-
-        {/* Items */}
-        <div className="mt-6 space-y-3">
-          <div className="flex justify-between text-sm">
-            <span>QTY</span>
-            <span>ARTIST - TOP TRACK</span>
-            <span>POPULARITY</span>
-          </div>
-          
-          {tracks.map((track) => (
-            <div key={track.artist} className="flex justify-between text-base">
-              <span className="w-10">1x</span>
-              <span className="flex-1 px-3 truncate">
-                {track.artist}
-                {track.topTrack && (
-                  <span className="text-gray-500 text-sm block">
-                    {track.topTrack}
-                  </span>
-                )}
-              </span>
-              <span>{track.popularity}%</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-8 pt-6 border-t border-dashed">
-          <div className="text-base space-y-2">
-            <div className="flex justify-between">
-              <span>Subtotal:</span>
-              <span>100%</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Tax:</span>
-              <span>0%</span>
-            </div>
-            <div className="flex justify-between font-bold mt-3 pt-3 border-t">
-              <span>TOTAL:</span>
-              <span>100%</span>
-            </div>
+    <div className="flex flex-col items-center">
+      <div 
+        id="receipt"
+        className="w-[95%] max-w-[400px] bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl"
+      >
+        <div className="relative overflow-hidden p-6 md:p-8 font-[var(--font-space-mono)]">
+          {/* Header */}
+          <div className="text-center border-b border-dashed pb-6">
+            <h1 className="text-2xl font-bold mb-2">ANOTHER RECEIPTIFY</h1>
+            <p className="text-base">Order #{orderNumber}</p>
+            <p className="text-sm mt-3">{today}</p>
+            <p className="text-sm">{time}</p>
+            <p className="text-sm mt-3 font-bold">{getPeriodText(timeRange)}</p>
           </div>
 
-          <div className="text-center mt-8 space-y-3">
-            <p className="text-sm">Thank you for listening!</p>
-            <p className="text-sm">================================</p>
-            <p className="text-xs">spotify.com</p>
-            <p className="text-xs text-gray-500">made by anderson bee</p>
+          {/* Items */}
+          <div className="mt-6 space-y-3">
+            <div className="flex justify-between text-sm">
+              <span>QTY</span>
+              <span>ARTIST - TOP TRACK</span>
+              <span>POPULARITY</span>
+            </div>
+            
+            {tracks.map((track) => (
+              <div key={track.artist} className="flex justify-between text-base">
+                <span className="w-10">1x</span>
+                <span className="flex-1 px-3 truncate">
+                  {track.artist}
+                  {track.topTrack && (
+                    <span className="text-gray-500 text-sm block">
+                      {track.topTrack}
+                    </span>
+                  )}
+                </span>
+                <span>{track.popularity}%</span>
+              </div>
+            ))}
           </div>
-        </div>
 
-        {/* Receipt edges */}
-        <div className="absolute top-0 left-0 right-0 h-6 bg-[linear-gradient(45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%),linear-gradient(-45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%)] bg-[length:12px_12px]"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-6 bg-[linear-gradient(45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%),linear-gradient(-45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%)] bg-[length:12px_12px]"></div>
+          {/* Footer */}
+          <div className="mt-8 pt-6 border-t border-dashed">
+            <div className="text-base space-y-2">
+              <div className="flex justify-between">
+                <span>Subtotal:</span>
+                <span>100%</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Tax:</span>
+                <span>0%</span>
+              </div>
+              <div className="flex justify-between font-bold mt-3 pt-3 border-t">
+                <span>TOTAL:</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <div className="text-center mt-8 space-y-3">
+              <p className="text-sm">Thank you for listening!</p>
+              <p className="text-sm">================================</p>
+              <p className="text-xs">spotify.com</p>
+              <p className="text-xs text-gray-500">made by anderson bee</p>
+            </div>
+          </div>
+
+          {/* Receipt edges */}
+          <div className="absolute top-0 left-0 right-0 h-6 bg-[linear-gradient(45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%),linear-gradient(-45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%)] bg-[length:12px_12px]"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-6 bg-[linear-gradient(45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%),linear-gradient(-45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%)] bg-[length:12px_12px]"></div>
+        </div>
       </div>
+      <ShareButton />
     </div>
   );
 }

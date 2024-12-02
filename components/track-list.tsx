@@ -23,7 +23,7 @@ export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Tr
   const orderNumber = Math.floor(Math.random() * 900000) + 100000;
 
   return (
-    <div className="max-w-[380px] mx-auto bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl">
+    <div className="max-w-[320px] mx-auto bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl">
       <div className="relative overflow-hidden p-6 font-[var(--font-space-mono)]">
         {/* Header */}
         <div className="text-center border-b border-dashed pb-4">

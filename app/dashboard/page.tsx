@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { TrackList } from '@/components/track-list'
 
 interface UserProfile {
@@ -18,6 +18,7 @@ interface Track {
 }
 
 export default function DashboardPage() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const [authCode, setAuthCode] = useState<string | null>(null)
   const [spotifyToken, setSpotifyToken] = useState<string | null>(null)
@@ -124,6 +125,13 @@ export default function DashboardPage() {
     fetchUserProfile()
   }, [spotifyToken])
 
+  const handleLogout = () => {
+    setSpotifyToken(null)
+    setAuthCode(null)
+    
+    router.push('/')
+  }
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
@@ -155,6 +163,13 @@ export default function DashboardPage() {
                 <div className="mt-2 text-sm text-gray-400">
                   <p>{userProfile.followers.total} followers</p>
                 </div>
+                
+                <button
+                  onClick={handleLogout}
+                  className="mt-6 px-6 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-full text-sm transition-colors"
+                >
+                  Logout
+                </button>
               </div>
             </div>
           )}

@@ -7,15 +7,15 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <header className="border-b border-gray-800">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Music className="h-6 w-6" />
-            <h1 className="text-xl font-bold">Heatmapify</h1>
+      <header className="border-b border-gray-800 sticky top-0 bg-gray-900/95 backdrop-blur-sm">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center space-x-3">
+            <Music className="h-7 w-7 text-emerald-500" />
+            <h1 className="text-2xl font-bold tracking-tight">another receiptify</h1>
           </div>
         </div>
       </header>
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-8">
         {children}
       </main>
     </div>

@@ -6,16 +6,15 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <header className="border-b border-gray-800 sticky top-0 bg-gray-900/95 backdrop-blur-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center space-x-3">
-            <Music className="h-7 w-7 text-emerald-500" />
-            <h1 className="text-2xl font-bold tracking-tight">another receiptify</h1>
+    <div className="min-h-screen bg-[#1a1b1e] text-white flex flex-col">
+      <header className="border-b border-gray-800 sticky top-0 bg-[#1a1b1e]/95 backdrop-blur-sm">
+        <div className="w-full px-4 py-4">
+          <div className="flex items-center justify-center">
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-center">another receiptify</h1>
           </div>
         </div>
       </header>
-      <main className="container mx-auto px-6 py-8">
+      <main className="flex-1 w-full px-4 py-8 flex flex-col items-center">
         {children}
       </main>
     </div>

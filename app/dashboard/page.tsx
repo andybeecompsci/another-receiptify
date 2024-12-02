@@ -134,7 +134,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#1a1b1e] text-white">
         <div className="text-center">
           <h1 className="text-xl font-bold mb-4">Error</h1>
           <p className="text-red-500">{error}</p>
@@ -144,7 +144,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4">
+    <div className="min-h-screen bg-[#1a1b1e] py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[300px,1fr] gap-8">
           {/* User Profile Section */}
@@ -166,7 +166,7 @@ export default function DashboardPage() {
                 
                 <button
                   onClick={handleLogout}
-                  className="mt-6 px-6 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-full text-sm transition-colors"
+                  className="mt-6 px-6 py-2 bg-black/40 hover:bg-black/60 text-gray-300 rounded-full text-sm transition-colors"
                 >
                   Logout
                 </button>

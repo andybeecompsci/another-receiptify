@@ -15,6 +15,41 @@ interface Track {
   popularity: number;
   genres: string;
   image?: string;
+  topTrack?: string;
+}
+
+async function fetchAllTopTracks(token: string, timeRange: string) {
+  const limit = 50;
+  let allTracks = [];
+  let offset = 0;
+  let hasMore = true;
+
+  while (hasMore) {
+    const response = await fetch(
+      `https://api.spotify.com/v1/me/top/tracks?limit=${limit}&offset=${offset}&time_range=${timeRange}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    allTracks = [...allTracks, ...data.items];
+    
+    // If we got fewer items than the limit, we've reached the end
+    if (data.items.length < limit) {
+      hasMore = false;
+    } else {
+      offset += limit;
+    }
+
+    // Optional: Add a reasonable cap to prevent too many requests
+    if (offset >= 150) { // This would get up to 150 tracks
+      hasMore = false;
+    }
+  }
+
+  return allTracks;
 }
 
 export default function DashboardPage() {
@@ -65,12 +100,14 @@ export default function DashboardPage() {
   }, [authCode])
 
   useEffect(() => {
-    async function fetchTracks() {
+    async function fetchTracksAndTopSongs() {
       if (!spotifyToken) return
 
       try {
         setIsLoading(true)
-        const response = await fetch(
+        
+        // Fetch top artists
+        const artistsResponse = await fetch(
           `https://api.spotify.com/v1/me/top/artists?limit=10&time_range=${timeRange}`,
           {
             headers: {
@@ -78,30 +115,48 @@ export default function DashboardPage() {
             },
           }
         )
-
-        const data = await response.json()
+        const artistsData = await artistsResponse.json()
         
-        console.log('Raw API response:', data.items[0])
+        // Fetch all available top tracks
+        const tracks = await fetchAllTopTracks(spotifyToken, timeRange)
+        console.log(`Total tracks fetched: ${tracks.length}`)
 
-        const formattedTracks = data.items.map((artist: any) => ({
-          artist: artist.name,
-          popularity: artist.popularity,
-          genres: artist.genres.join(', '),
-          image: artist.images[0]?.url
-        }))
+        // Create a map of artist ID to their top track
+        const artistTopTracks = new Map()
+        tracks.forEach((track: any) => {
+          track.artists.forEach((artist: any) => {
+            if (!artistTopTracks.has(artist.id)) {
+              artistTopTracks.set(artist.id, {
+                name: track.name,
+                rank: tracks.indexOf(track)
+              })
+            }
+          })
+        })
+        console.log('Artist top tracks map:', Object.fromEntries(artistTopTracks))
 
-        console.log('Formatted track:', formattedTracks[0])
+        // Combine artist data with their personal top tracks
+        const artistsWithTopTracks = artistsData.items.map((artist: any) => {
+          const topTrackInfo = artistTopTracks.get(artist.id)
+          return {
+            artist: artist.name,
+            popularity: artist.popularity,
+            genres: artist.genres.join(', '),
+            image: artist.images[0]?.url,
+            topTrack: topTrackInfo ? topTrackInfo.name : 'No personal top track found'
+          }
+        })
 
-        setTracks(formattedTracks)
+        setTracks(artistsWithTopTracks)
       } catch (error) {
-        console.error('Error fetching artists:', error)
-        setError('Failed to load artists')
+        console.error('Error fetching artists and tracks:', error)
+        setError('Failed to load artists and their top tracks')
       } finally {
         setIsLoading(false)
       }
     }
 
-    fetchTracks()
+    fetchTracksAndTopSongs()
   }, [spotifyToken, timeRange])
 
   useEffect(() => {

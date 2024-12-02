@@ -3,6 +3,7 @@ interface Track {
   popularity: number;
   genres: string;
   image?: string;
+  topTrack?: string;
 }
 
 export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Track[] }) {
@@ -51,14 +52,21 @@ export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Tr
         <div className="mt-6 space-y-3">
           <div className="flex justify-between text-sm">
             <span>QTY</span>
-            <span>ITEM</span>
+            <span>ARTIST - TOP TRACK</span>
             <span>POPULARITY</span>
           </div>
           
-          {tracks.map((track, index) => (
+          {tracks.map((track) => (
             <div key={track.artist} className="flex justify-between text-base">
               <span className="w-10">1x</span>
-              <span className="flex-1 px-3 truncate">{track.artist}</span>
+              <span className="flex-1 px-3 truncate">
+                {track.artist}
+                {track.topTrack && (
+                  <span className="text-gray-500 text-sm block">
+                    {track.topTrack}
+                  </span>
+                )}
+              </span>
               <span>{track.popularity}%</span>
             </div>
           ))}

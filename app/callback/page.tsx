@@ -11,18 +11,14 @@ export default function CallbackPage() {
     const code = searchParams.get("code")
     
     if (code) {
-      // Store the code temporarily
-      sessionStorage.setItem("spotify_auth_code", code)
-      // Redirect to the main app
-      router.push("/dashboard")
+      // Redirect to dashboard with the code
+      router.push(`/dashboard?code=${code}`)
     }
-  }, [router, searchParams])
+  }, [searchParams, router])
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-pulse text-lg">
-        Authenticating...
-      </div>
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-500"></div>
     </div>
   )
 }

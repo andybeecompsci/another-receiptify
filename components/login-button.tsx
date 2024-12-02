@@ -1,33 +1,34 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Music } from 'lucide-react'
+const SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID
+const REDIRECT_URI = 'http://localhost:3000/api/auth/callback'
+const SCOPES = [
+  'user-top-read',
+  'user-read-recently-played',
+  'user-read-private',
+  'user-read-email'
+].join(' ')
 
 export function LoginButton() {
   const handleLogin = () => {
-    const clientId = "2324440c113644eaa54ecd7a52a30d7e"
-    const redirectUri = "http://localhost:3000/api/auth/callback"
-    const scope = "user-read-recently-played user-top-read"
-    
     const params = new URLSearchParams({
-      client_id: clientId,
-      response_type: "code",
-      redirect_uri: redirectUri,
-      scope: scope,
+      client_id: SPOTIFY_CLIENT_ID!,
+      response_type: 'code',
+      redirect_uri: REDIRECT_URI,
+      scope: SCOPES,
+      show_dialog: 'true'
     })
 
     window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`
   }
 
   return (
-    <Button 
+    <button
       onClick={handleLogin}
-      size="lg" 
-      className="bg-green-500 hover:bg-green-600 text-white"
+      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
     >
-      <Music className="mr-2 h-5 w-5" />
       Login with Spotify
-    </Button>
+    </button>
   )
 }
 

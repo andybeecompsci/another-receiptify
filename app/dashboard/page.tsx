@@ -24,40 +24,6 @@ interface TopTrack {
   artists: { id: string; name: string }[];
 }
 
-async function fetchAllTopTracks(token: string, timeRange: string) {
-  const limit = 50;
-  let allTracks = [];
-  let offset = 0;
-  let hasMore = true;
-
-  while (hasMore) {
-    const response = await fetch(
-      `https://api.spotify.com/v1/me/top/tracks?limit=${limit}&offset=${offset}&time_range=${timeRange}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      }
-    );
-    const data = await response.json();
-    allTracks = [...allTracks, ...data.items];
-    
-    // If we got fewer items than the limit, we've reached the end
-    if (data.items.length < limit) {
-      hasMore = false;
-    } else {
-      offset += limit;
-    }
-
-    // Optional: Add a reasonable cap to prevent too many requests
-    if (offset >= 150) { // This would get up to 150 tracks
-      hasMore = false;
-    }
-  }
-
-  return allTracks;
-}
-
 export default function DashboardPage() {
   const router = useRouter()
   const searchParams = useSearchParams()

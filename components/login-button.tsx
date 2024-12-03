@@ -1,7 +1,7 @@
 "use client"
 
 const SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID
-const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI || 'http://localhost:3000/api/auth/callback'
+const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI
 const SCOPES = [
   'user-top-read',
   'user-read-recently-played',
@@ -11,8 +11,13 @@ const SCOPES = [
 
 export function LoginButton() {
   const handleLogin = () => {
+    if (!SPOTIFY_CLIENT_ID || !REDIRECT_URI) {
+      console.error('Missing required environment variables')
+      return
+    }
+
     const params = new URLSearchParams({
-      client_id: SPOTIFY_CLIENT_ID!,
+      client_id: SPOTIFY_CLIENT_ID,
       response_type: 'code',
       redirect_uri: REDIRECT_URI,
       scope: SCOPES,

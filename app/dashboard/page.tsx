@@ -18,6 +18,11 @@ interface Track {
   topTrack?: string;
 }
 
+interface TopTrack {
+  name: string;
+  artists: { id: string; name: string }[];
+}
+
 async function fetchAllTopTracks(token: string, timeRange: string) {
   const limit = 50;
   let allTracks = [];
@@ -106,6 +111,35 @@ export default function DashboardPage() {
       try {
         setIsLoading(true)
         
+        // First fetch all top tracks to have the complete listening history
+        const allTopTracks: TopTrack[] = []
+        let hasMore = true
+        let offset = 0
+        
+        while (hasMore) {
+          const tracksResponse = await fetch(
+            `https://api.spotify.com/v1/me/top/tracks?limit=50&offset=${offset}&time_range=${timeRange}`,
+            {
+              headers: {
+                'Authorization': `Bearer ${spotifyToken}`,
+              },
+            }
+          )
+          const tracksData = await tracksResponse.json()
+          
+          allTopTracks.push(...tracksData.items)
+          
+          if (tracksData.items.length < 50) {
+            hasMore = false
+          } else {
+            offset += 50
+          }
+          
+          if (offset >= 300) {
+            hasMore = false
+          }
+        }
+
         // Fetch top artists
         const artistsResponse = await fetch(
           `https://api.spotify.com/v1/me/top/artists?limit=10&time_range=${timeRange}`,
@@ -116,34 +150,20 @@ export default function DashboardPage() {
           }
         )
         const artistsData = await artistsResponse.json()
-        
-        // Fetch all available top tracks
-        const tracks = await fetchAllTopTracks(spotifyToken, timeRange)
-        console.log(`Total tracks fetched: ${tracks.length}`)
 
-        // Create a map of artist ID to their top track
-        const artistTopTracks = new Map()
-        tracks.forEach((track: any) => {
-          track.artists.forEach((artist: any) => {
-            if (!artistTopTracks.has(artist.id)) {
-              artistTopTracks.set(artist.id, {
-                name: track.name,
-                rank: tracks.indexOf(track)
-              })
-            }
-          })
-        })
-        console.log('Artist top tracks map:', Object.fromEntries(artistTopTracks))
-
-        // Combine artist data with their personal top tracks
+        // For each artist, find their most played song from the user's top tracks
         const artistsWithTopTracks = artistsData.items.map((artist: any) => {
-          const topTrackInfo = artistTopTracks.get(artist.id)
+          // Find all tracks by this artist
+          const artistTracks = allTopTracks.filter(track => 
+            track.artists.some(a => a.id === artist.id)
+          )
+          
           return {
             artist: artist.name,
             popularity: artist.popularity,
             genres: artist.genres.join(', '),
             image: artist.images[0]?.url,
-            topTrack: topTrackInfo ? topTrackInfo.name : 'No personal top track found'
+            topTrack: artistTracks.length > 0 ? artistTracks[0].name : undefined
           }
         })
 

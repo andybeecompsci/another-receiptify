@@ -56,24 +56,24 @@ export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Tr
 
           {/* Items */}
           <div className="mt-6 space-y-3">
-            <div className="flex justify-between text-sm">
+            <div className="grid grid-cols-[auto,1fr,auto] gap-2 text-sm">
               <span>QTY</span>
-              <span>ARTIST - TOP TRACK</span>
-              <span>POPULARITY</span>
+              <span className="text-center">ARTIST - TOP TRACK</span>
+              <span>POP</span>
             </div>
             
             {tracks.map((track) => (
-              <div key={track.artist} className="flex justify-between text-base">
-                <span className="w-10">1x</span>
-                <span className="flex-1 px-3 truncate">
-                  {track.artist}
+              <div key={track.artist} className="grid grid-cols-[auto,1fr,auto] gap-2 items-start text-base">
+                <span className="w-8">1x</span>
+                <div className="px-2 break-words">
+                  <span className="block">{track.artist}</span>
                   {track.topTrack && (
-                    <span className="text-gray-500 text-sm block">
+                    <span className="block text-sm text-gray-500 break-words">
                       {track.topTrack}
                     </span>
                   )}
-                </span>
-                <span>{track.popularity}%</span>
+                </div>
+                <span className="whitespace-nowrap">{track.popularity}%</span>
               </div>
             ))}
           </div>

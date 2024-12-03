@@ -20,9 +20,6 @@ export function ShareButton() {
       tempContainer.style.left = '-9999px'
       tempContainer.style.width = '400px' // Match the original width
       tempContainer.style.backgroundColor = '#ffffff'
-      tempContainer.style.display = 'flex'
-      tempContainer.style.flexDirection = 'column'
-      tempContainer.style.alignItems = 'center'
       document.body.appendChild(tempContainer)
       
       // Clone the receipt content
@@ -48,17 +45,6 @@ export function ShareButton() {
       }
       
       tempContainer.appendChild(receiptClone)
-
-      // Add link text
-      const linkText = document.createElement('p')
-      linkText.style.fontFamily = 'monospace'
-      linkText.style.fontSize = '14px'
-      linkText.style.color = '#000000'
-      linkText.style.marginTop = '12px'
-      linkText.style.marginBottom = '8px'
-      linkText.style.textAlign = 'center'
-      linkText.innerText = 'spotify-heatmap.vercel.app'
-      tempContainer.appendChild(linkText)
 
       // Generate image
       const canvas = await html2canvas(tempContainer, {
@@ -99,7 +85,7 @@ export function ShareButton() {
         await navigator.share({
           files: [file],
           title: 'My Spotify Receipt',
-          text: 'Check out my Spotify listening history!\n\nAdd the Link sticker in Instagram: https://spotify-heatmap.vercel.app'
+          text: 'Check out my Spotify listening history!\n\nAdd the Link sticker in Instagram: https://receiptify-two.vercel.app'
         })
       } else {
         // Fallback for desktop

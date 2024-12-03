@@ -22,22 +22,22 @@ export function ShareButton() {
       storyContainer.style.height = '1920px'
       storyContainer.style.backgroundColor = '#ffffff'
       storyContainer.style.display = 'flex'
-      storyContainer.style.alignItems = 'center'
+      storyContainer.style.alignItems = 'flex-start'
       storyContainer.style.justifyContent = 'center'
+      storyContainer.style.paddingTop = '40px'
       
       // Clone the receipt content
       const receiptClone = receiptElement.cloneNode(true) as HTMLDivElement
-      // Adjusted scale to be between previous values
-      receiptClone.style.transform = 'scale(1.0)'
+      receiptClone.style.transform = 'scale(0.95)'
       receiptClone.style.transformOrigin = 'top center'
       receiptClone.style.backgroundColor = '#ffffff'
       receiptClone.style.width = '900px'
-      receiptClone.style.margin = '60px auto'
       receiptClone.style.padding = '20px'
       receiptClone.style.boxSizing = 'border-box'
       receiptClone.style.display = 'flex'
       receiptClone.style.flexDirection = 'column'
-      receiptClone.style.minHeight = '90%'
+      receiptClone.style.minHeight = 'auto'
+      receiptClone.style.marginBottom = '100px'
       
       // Make all text black
       const allText = receiptClone.querySelectorAll('*')

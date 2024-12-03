@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { TrackList } from '@/components/track-list'
 import { ViewToggle } from '@/components/view-toggle'
 
@@ -22,6 +23,18 @@ interface Track {
 interface TopTrack {
   name: string;
   artists: { id: string; name: string }[];
+}
+
+interface SpotifyArtist {
+  id: string;
+  name: string;
+  popularity: number;
+  genres: string[];
+  images: { url: string }[];
+}
+
+interface SpotifyResponse {
+  items: SpotifyArtist[];
 }
 
 export default function DashboardPage() {
@@ -120,7 +133,7 @@ export default function DashboardPage() {
         const artistsData = await artistsResponse.json()
 
         // For each artist, find their most played song from the user's top tracks
-        const artistsWithTopTracks = artistsData.items.map((artist: any) => {
+        const artistsWithTopTracks = artistsData.items.map((artist: SpotifyArtist) => {
           // Find all tracks by this artist
           const artistTracks = allTopTracks.filter(track => 
             track.artists.some(a => a.id === artist.id)
@@ -218,9 +231,11 @@ export default function DashboardPage() {
             <div className="space-y-6">
               <div className="flex flex-col items-center text-center">
                 <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green-500 mb-4">
-                  <img 
+                  <Image 
                     src={userProfile.images[0]?.url || '/default-avatar.png'} 
-                    alt="Profile" 
+                    alt="Profile"
+                    width={128}
+                    height={128}
                     className="w-full h-full object-cover"
                   />
                 </div>

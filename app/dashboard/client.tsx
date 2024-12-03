@@ -37,7 +37,7 @@ interface SpotifyResponse {
   items: SpotifyArtist[];
 }
 
-export default function ClientDashboard() {
+export function ClientDashboard() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [authCode, setAuthCode] = useState<string | null>(null)

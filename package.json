@@ -18,7 +18,9 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@next/swc-linux-x64-gnu": "14.2.16",
+    "@next/swc-linux-x64-musl": "14.2.16"
   },
   "devDependencies": {
     "@types/node": "^20",

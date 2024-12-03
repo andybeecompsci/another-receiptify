@@ -303,6 +303,7 @@ export function ClientDashboard() {
                 timeRange={timeRange} 
                 tracks={view === 'artists' ? tracks : processGenres(tracks)}
                 view={view}
+                userProfile={userProfile ?? undefined}
               />
             )}
           </div>

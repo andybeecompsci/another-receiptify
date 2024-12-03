@@ -9,10 +9,16 @@ interface Track {
 import { ShareButton } from './share-button'
 import { Github } from 'lucide-react'
 
-export function TrackList({ timeRange, tracks, view = 'artists' }: { 
+export function TrackList({ 
+  timeRange, 
+  tracks, 
+  view = 'artists',
+  userProfile 
+}: { 
   timeRange: string, 
   tracks: Track[],
-  view?: 'artists' | 'genres' 
+  view?: 'artists' | 'genres',
+  userProfile?: { display_name: string }
 }) {
   if (!tracks?.length) return null;
 
@@ -61,7 +67,15 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
           {/* Header */}
           <div className="text-center border-b border-dashed pb-3">
             <h1 className="text-2xl font-bold mb-1">ANOTHER RECEIPTIFY</h1>
-            <p className="text-base">Order #{orderNumber}</p>
+            <p className="text-base">Order #{userProfile?.display_name
+              ?.toLowerCase()
+              .replace(/ee/g, 'e3')
+              .replace(/e3e/g, '3e')
+              .replace(/e/g, '3')
+              .replace(/a/g, '4')
+              .replace(/o/g, '0')
+              .replace(/b/g, '8')
+              .toUpperCase()}</p>
             <p className="text-sm mt-1.5">{today}</p>
             <p className="text-sm">{time}</p>
             <p className="text-sm mt-1.5 font-bold">{getPeriodText(timeRange)}</p>
@@ -74,7 +88,7 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
               <span className="text-center">
                 {view === 'artists' ? 'ARTIST - TOP TRACK' : 'GENRE'}
               </span>
-              <span>POP</span>
+              <span>PRICE</span>
             </div>
             
             {tracks.map((track) => (
@@ -88,7 +102,7 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
                     </span>
                   )}
                 </div>
-                <span className="whitespace-nowrap">{track.popularity}%</span>
+                <span className="whitespace-nowrap">${(track.popularity / 10).toFixed(2)}</span>
               </div>
             ))}
           </div>
@@ -98,21 +112,24 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
             <div className="text-base space-y-1">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
-                <span>100%</span>
+                <span>${tracks.reduce((sum, track) => sum + track.popularity/10, 0).toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Tax:</span>
-                <span>0%</span>
+                <span>$0.00</span>
               </div>
               <div className="flex justify-between font-bold mt-1.5 pt-1.5 border-t">
                 <span>TOTAL:</span>
-                <span>100%</span>
+                <span>${tracks.reduce((sum, track) => sum + track.popularity/10, 0).toFixed(2)}</span>
               </div>
             </div>
 
             <div className="text-center space-y-1.5">
-              <p className="text-sm">Thank you for listening!</p>
-              <p className="text-sm">================================</p>
+              <img 
+                src="/barcode.png" 
+                alt="Barcode" 
+                className="h-12 w-full object-contain my-2"
+              />
               <p className="text-xs">receiptify-two.vercel.app</p>
               <div className="flex items-center justify-center gap-2 pb-1">
                 <p className="text-xs text-gray-500">made by anderson bee</p>

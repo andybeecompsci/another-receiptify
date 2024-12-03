@@ -14,6 +14,7 @@ export default function LoginPage() {
               <p className="text-3xl font-bold">$0.00</p>
             </div>
             <p className="text-sm text-center mt-4">Please login with Spotify to proceed</p>
+            <p className="text-[10px] text-center">(This isn't taking your money, it's a gimmick)</p>
           </div>
         </div>
         

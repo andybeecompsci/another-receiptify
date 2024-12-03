@@ -1,11 +1,15 @@
+import Image from 'next/image'
+
 export default function LamePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white">
       <div className="max-w-2xl w-full p-4 text-center">
-        <img 
+        <Image 
           src="/thumbs-down.jpg" 
           alt="Thumbs down" 
-          className="w-96 h-96 mx-auto"
+          width={384}
+          height={384}
+          className="mx-auto"
         />
         <a 
           href="/"

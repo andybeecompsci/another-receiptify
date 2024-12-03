@@ -8,7 +8,11 @@ interface Track {
 
 import { ShareButton } from './share-button'
 
-export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Track[] }) {
+export function TrackList({ timeRange, tracks, view = 'artists' }: { 
+  timeRange: string, 
+  tracks: Track[],
+  view?: 'artists' | 'genres' 
+}) {
   if (!tracks?.length) return null;
 
   const today = new Date().toLocaleDateString('en-US', {
@@ -58,7 +62,9 @@ export function TrackList({ timeRange, tracks }: { timeRange: string, tracks: Tr
           <div className="mt-6 space-y-3">
             <div className="grid grid-cols-[auto,1fr,auto] gap-2 text-sm">
               <span>QTY</span>
-              <span className="text-center">ARTIST - TOP TRACK</span>
+              <span className="text-center">
+                {view === 'artists' ? 'ARTIST - TOP TRACK' : 'GENRE'}
+              </span>
               <span>POP</span>
             </div>
             

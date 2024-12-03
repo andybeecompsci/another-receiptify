@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { TrackList } from '@/components/track-list'
+import { ViewToggle } from '@/components/view-toggle'
 
 interface UserProfile {
   display_name: string;
@@ -67,6 +68,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
+  const [view, setView] = useState<'artists' | 'genres'>('artists')
 
   useEffect(() => {
     const code = searchParams.get('code')
@@ -207,6 +209,29 @@ export default function DashboardPage() {
     router.push('/')
   }
 
+  const processGenres = (tracks: Track[]) => {
+    // Create a map to count genre occurrences
+    const genreCount = new Map<string, number>()
+    
+    tracks.forEach(track => {
+      const genres = track.genres.split(', ')
+      genres.forEach(genre => {
+        genreCount.set(genre, (genreCount.get(genre) || 0) + 1)
+      })
+    })
+
+    // Convert to array and sort by count
+    return Array.from(genreCount.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([genre, count]) => ({
+        artist: genre,
+        popularity: Math.round((count / tracks.length) * 100),
+        genres: '',
+        topTrack: undefined
+      }))
+  }
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#1a1b1e] text-white">
@@ -251,6 +276,7 @@ export default function DashboardPage() {
 
           {/* Main Content */}
           <div>
+            <ViewToggle view={view} onViewChange={setView} />
             <div className="flex justify-center gap-4 mb-8">
               <button
                 onClick={() => setTimeRange('short_term')}
@@ -294,7 +320,8 @@ export default function DashboardPage() {
             ) : (
               <TrackList 
                 timeRange={timeRange} 
-                tracks={tracks}
+                tracks={view === 'artists' ? tracks : processGenres(tracks)}
+                view={view}
               />
             )}
           </div>

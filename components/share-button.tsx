@@ -85,7 +85,7 @@ export function ShareButton() {
         await navigator.share({
           files: [file],
           title: 'My Spotify Receipt',
-          text: 'Check out my Spotify listening history!'
+          text: 'Check out my Spotify listening history!\n\nAdd the Link sticker in Instagram: https://spotify-heatmap.vercel.app'
         })
       } else {
         // Fallback for desktop

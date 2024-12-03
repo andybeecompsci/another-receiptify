@@ -1,3 +1,5 @@
+import { Github } from 'lucide-react'
+
 export default function DashboardLayout({
   children,
 }: {
@@ -15,6 +17,19 @@ export default function DashboardLayout({
       <main className="flex-1 w-full px-4 py-8 flex flex-col items-center">
         {children}
       </main>
+      <footer className="w-full border-t border-gray-800 py-4">
+        <div className="flex items-center justify-center gap-2">
+          <p className="text-sm text-gray-500">anderson bee</p>
+          <a 
+            href="https://github.com/andybeecompsci" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-gray-400 transition-colors"
+          >
+            <Github size={16} />
+          </a>
+        </div>
+      </footer>
     </div>
   )
 }

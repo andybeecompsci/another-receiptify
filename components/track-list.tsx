@@ -7,6 +7,7 @@ interface Track {
 }
 
 import { ShareButton } from './share-button'
+import { Github } from 'lucide-react'
 
 export function TrackList({ timeRange, tracks, view = 'artists' }: { 
   timeRange: string, 
@@ -101,11 +102,21 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
               </div>
             </div>
 
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-2">
               <p className="text-sm">Thank you for listening!</p>
               <p className="text-sm">================================</p>
               <p className="text-xs">spotify.com</p>
-              <p className="text-xs text-gray-500 pb-4">made by anderson bee</p>
+              <div className="flex items-center justify-center gap-2 pb-2">
+                <p className="text-xs text-gray-500">made by anderson bee</p>
+                <a 
+                  href="https://github.com/andybeecompsci" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  <Github size={14} />
+                </a>
+              </div>
             </div>
           </div>
         </div>

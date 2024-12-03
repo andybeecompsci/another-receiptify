@@ -18,7 +18,6 @@ export function ShareButton() {
       const storyContainer = document.createElement('div')
       storyContainer.style.position = 'absolute'
       storyContainer.style.left = '-9999px'
-      // Instagram Story dimensions (1080 x 1920)
       storyContainer.style.width = '1080px'
       storyContainer.style.height = '1920px'
       storyContainer.style.backgroundColor = '#ffffff'
@@ -28,14 +27,17 @@ export function ShareButton() {
       
       // Clone the receipt content
       const receiptClone = receiptElement.cloneNode(true) as HTMLDivElement
-      // Calculate scale to fit receipt in Instagram story width with padding
-      receiptClone.style.transform = 'scale(0.85)'
+      // Adjusted scale to be between previous values
+      receiptClone.style.transform = 'scale(1.0)'
       receiptClone.style.transformOrigin = 'top center'
       receiptClone.style.backgroundColor = '#ffffff'
-      receiptClone.style.width = '900px' // Slightly smaller than story width
-      receiptClone.style.margin = '100px auto'
+      receiptClone.style.width = '900px'
+      receiptClone.style.margin = '60px auto'
       receiptClone.style.padding = '20px'
       receiptClone.style.boxSizing = 'border-box'
+      receiptClone.style.display = 'flex'
+      receiptClone.style.flexDirection = 'column'
+      receiptClone.style.minHeight = '90%'
       
       // Make all text black
       const allText = receiptClone.querySelectorAll('*')
@@ -52,7 +54,7 @@ export function ShareButton() {
       // Generate image
       const canvas = await html2canvas(storyContainer, {
         backgroundColor: '#ffffff',
-        scale: 2, // Higher quality
+        scale: 2,
         logging: false,
         useCORS: true,
         width: 1080,

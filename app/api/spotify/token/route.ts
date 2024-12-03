@@ -4,12 +4,15 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET
 const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI
 
-if (!CLIENT_ID || !CLIENT_SECRET || !REDIRECT_URI) {
-  throw new Error('Missing required environment variables')
-}
-
 export async function POST(request: Request) {
   try {
+    if (!CLIENT_ID || !CLIENT_SECRET || !REDIRECT_URI) {
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      )
+    }
+
     const { code } = await request.json()
     
     if (!code) {

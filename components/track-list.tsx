@@ -47,8 +47,16 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
     <div className="flex flex-col items-center">
       <div 
         id="receipt"
-        className="w-full max-w-[400px] bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl"
+        className="w-full max-w-[400px] text-black font-mono transform transition-all duration-200 hover:scale-[1.02] relative overflow-hidden"
+        style={{
+          backgroundImage: 'url("/paper-texture.jpg.jpg")',
+          backgroundSize: '130%',
+          backgroundPosition: 'center',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        }}
       >
+        <div className="absolute inset-0 bg-white/75" />
+        
         <div className="relative p-3 md:p-5">
           {/* Header */}
           <div className="text-center border-b border-dashed pb-3">

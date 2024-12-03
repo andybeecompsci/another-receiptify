@@ -46,9 +46,9 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
     <div className="flex flex-col items-center">
       <div 
         id="receipt"
-        className="w-[95%] max-w-[400px] bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl"
+        className="w-full max-w-[400px] bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl"
       >
-        <div className="relative overflow-hidden p-6 md:p-8 font-[var(--font-space-mono)]">
+        <div className="relative p-6 md:p-8">
           {/* Header */}
           <div className="text-center border-b border-dashed pb-6">
             <h1 className="text-2xl font-bold mb-2">ANOTHER RECEIPTIFY</h1>
@@ -59,8 +59,8 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
           </div>
 
           {/* Items */}
-          <div className="mt-6 space-y-3">
-            <div className="grid grid-cols-[auto,1fr,auto] gap-2 text-sm">
+          <div className="mt-6 space-y-4">
+            <div className="grid grid-cols-[auto,1fr,auto] gap-4 text-sm">
               <span>QTY</span>
               <span className="text-center">
                 {view === 'artists' ? 'ARTIST - TOP TRACK' : 'GENRE'}
@@ -69,12 +69,12 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
             </div>
             
             {tracks.map((track) => (
-              <div key={track.artist} className="grid grid-cols-[auto,1fr,auto] gap-2 items-start text-base">
+              <div key={track.artist} className="grid grid-cols-[auto,1fr,auto] gap-4 items-start text-sm">
                 <span className="w-8">1x</span>
-                <div className="px-2 break-words">
-                  <span className="block">{track.artist}</span>
+                <div className="break-words">
+                  <span className="block font-bold">{track.artist}</span>
                   {track.topTrack && (
-                    <span className="block text-sm text-gray-500 break-words">
+                    <span className="block text-gray-500 mt-1 break-words">
                       {track.topTrack}
                     </span>
                   )}
@@ -85,7 +85,7 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
           </div>
 
           {/* Footer */}
-          <div className="mt-8 pt-6 border-t border-dashed">
+          <div className="mt-8 pt-6 border-t border-dashed space-y-6">
             <div className="text-base space-y-2">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
@@ -101,17 +101,13 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
               </div>
             </div>
 
-            <div className="text-center mt-8 space-y-3">
+            <div className="text-center space-y-4">
               <p className="text-sm">Thank you for listening!</p>
               <p className="text-sm">================================</p>
               <p className="text-xs">spotify.com</p>
-              <p className="text-xs text-gray-500">made by anderson bee</p>
+              <p className="text-xs text-gray-500 pb-4">made by anderson bee</p>
             </div>
           </div>
-
-          {/* Receipt edges */}
-          <div className="absolute top-0 left-0 right-0 h-6 bg-[linear-gradient(45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%),linear-gradient(-45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%)] bg-[length:12px_12px]"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-6 bg-[linear-gradient(45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%),linear-gradient(-45deg,transparent_33.333%,#fff_33.333%,#fff_66.667%,transparent_66.667%)] bg-[length:12px_12px]"></div>
         </div>
       </div>
       <ShareButton />

@@ -14,58 +14,53 @@ export function ShareButton() {
       const receiptElement = document.querySelector('#receipt') as HTMLDivElement
       if (!receiptElement) return
 
-      // Create a temporary container for the story version
-      const storyContainer = document.createElement('div')
-      storyContainer.style.position = 'absolute'
-      storyContainer.style.left = '-9999px'
-      storyContainer.style.width = '1080px'
-      storyContainer.style.height = '1920px'
-      storyContainer.style.backgroundColor = '#ffffff'
-      storyContainer.style.display = 'flex'
-      storyContainer.style.alignItems = 'flex-start'
-      storyContainer.style.justifyContent = 'center'
-      storyContainer.style.paddingTop = '40px'
+      // Create a temporary container
+      const tempContainer = document.createElement('div')
+      tempContainer.style.position = 'absolute'
+      tempContainer.style.left = '-9999px'
+      tempContainer.style.width = '400px' // Match the original width
+      tempContainer.style.backgroundColor = '#ffffff'
+      document.body.appendChild(tempContainer)
       
       // Clone the receipt content
       const receiptClone = receiptElement.cloneNode(true) as HTMLDivElement
-      receiptClone.style.transform = 'scale(0.95)'
-      receiptClone.style.transformOrigin = 'top center'
+      
+      // Reset any transforms and preserve styling
+      receiptClone.style.transform = 'none'
+      receiptClone.style.width = '100%'
+      receiptClone.style.maxWidth = '400px'
+      receiptClone.style.margin = '0'
       receiptClone.style.backgroundColor = '#ffffff'
-      receiptClone.style.width = '900px'
-      receiptClone.style.padding = '20px'
-      receiptClone.style.boxSizing = 'border-box'
-      receiptClone.style.display = 'flex'
-      receiptClone.style.flexDirection = 'column'
-      receiptClone.style.minHeight = 'auto'
-      receiptClone.style.marginBottom = '100px'
       
-      // Make all text black
-      const allText = receiptClone.querySelectorAll('*')
-      allText.forEach((element: Element) => {
-        const el = element as HTMLElement
+      // Ensure text styles are preserved
+      const allElements = receiptClone.getElementsByTagName('*')
+      for (let i = 0; i < allElements.length; i++) {
+        const el = allElements[i] as HTMLElement
         el.style.color = '#000000'
-        el.style.whiteSpace = 'pre'
-      })
+        el.style.fontFamily = 'monospace'
+        
+        // Preserve line breaks and whitespace
+        el.style.whiteSpace = 'pre-wrap'
+        el.style.wordBreak = 'break-word'
+      }
       
-      // Add to temporary container
-      storyContainer.appendChild(receiptClone)
-      document.body.appendChild(storyContainer)
+      tempContainer.appendChild(receiptClone)
 
       // Generate image
-      const canvas = await html2canvas(storyContainer, {
+      const canvas = await html2canvas(tempContainer, {
         backgroundColor: '#ffffff',
         scale: 2,
         logging: false,
         useCORS: true,
-        width: 1080,
-        height: 1920,
-        onclone: (doc) => {
-          const clonedReceipt = doc.querySelector('#receipt')
+        onclone: (clonedDoc) => {
+          const clonedReceipt = clonedDoc.querySelector('#receipt')
           if (clonedReceipt) {
             Array.from(clonedReceipt.getElementsByTagName('*')).forEach(el => {
               if (el instanceof HTMLElement) {
                 el.style.color = '#000000'
-                el.style.whiteSpace = 'pre'
+                el.style.fontFamily = 'monospace'
+                el.style.whiteSpace = 'pre-wrap'
+                el.style.wordBreak = 'break-word'
               }
             })
           }
@@ -73,7 +68,7 @@ export function ShareButton() {
       })
 
       // Clean up
-      document.body.removeChild(storyContainer)
+      document.body.removeChild(tempContainer)
 
       // Convert to blob
       const blob = await new Promise<Blob>((resolve) => {
@@ -112,7 +107,7 @@ export function ShareButton() {
     <button
       onClick={handleShare}
       disabled={isGenerating}
-      className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition-colors disabled:opacity-50"
+      className="mt-4 w-full max-w-[400px] bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition-colors disabled:opacity-50"
     >
       {isGenerating ? 'Generating...' : 'Share Receipt'}
     </button>

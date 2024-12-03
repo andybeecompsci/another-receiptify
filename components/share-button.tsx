@@ -10,8 +10,8 @@ export function ShareButton() {
     try {
       setIsGenerating(true)
       
-      // Find the receipt element
-      const receiptElement = document.querySelector('#receipt')
+      // Find the receipt element with proper type assertion
+      const receiptElement = document.querySelector('#receipt') as HTMLDivElement
       if (!receiptElement) return
 
       // Generate image
@@ -32,8 +32,8 @@ export function ShareButton() {
       // Create file
       const file = new File([blob], 'receiptify.png', { type: 'image/png' })
 
-      // Check if Web Share API is available
-      if (navigator.share) {
+      // Check if Web Share API is available and properly type the navigator.share check
+      if (navigator.share && typeof navigator.share === 'function') {
         await navigator.share({
           files: [file],
           title: 'My Spotify Receiptify',

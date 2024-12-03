@@ -49,18 +49,18 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
         id="receipt"
         className="w-full max-w-[400px] bg-white text-black font-mono transform transition-all duration-200 hover:scale-[1.02] shadow-xl"
       >
-        <div className="relative p-6 md:p-8">
+        <div className="relative p-4 md:p-6">
           {/* Header */}
-          <div className="text-center border-b border-dashed pb-6">
-            <h1 className="text-2xl font-bold mb-2">ANOTHER RECEIPTIFY</h1>
+          <div className="text-center border-b border-dashed pb-4">
+            <h1 className="text-2xl font-bold mb-1">ANOTHER RECEIPTIFY</h1>
             <p className="text-base">Order #{orderNumber}</p>
-            <p className="text-sm mt-3">{today}</p>
+            <p className="text-sm mt-2">{today}</p>
             <p className="text-sm">{time}</p>
-            <p className="text-sm mt-3 font-bold">{getPeriodText(timeRange)}</p>
+            <p className="text-sm mt-2 font-bold">{getPeriodText(timeRange)}</p>
           </div>
 
           {/* Items */}
-          <div className="mt-6 space-y-4">
+          <div className="mt-4 space-y-3">
             <div className="grid grid-cols-[auto,1fr,auto] gap-4 text-sm">
               <span>QTY</span>
               <span className="text-center">
@@ -75,7 +75,7 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
                 <div className="break-words">
                   <span className="block font-bold">{track.artist}</span>
                   {track.topTrack && (
-                    <span className="block text-gray-500 mt-1 break-words">
+                    <span className="block text-gray-500 mt-0.5 break-words">
                       {track.topTrack}
                     </span>
                   )}
@@ -86,8 +86,8 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
           </div>
 
           {/* Footer */}
-          <div className="mt-8 pt-6 border-t border-dashed space-y-6">
-            <div className="text-base space-y-2">
+          <div className="mt-6 pt-4 border-t border-dashed space-y-4">
+            <div className="text-base space-y-1.5">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
                 <span>100%</span>
@@ -96,17 +96,17 @@ export function TrackList({ timeRange, tracks, view = 'artists' }: {
                 <span>Tax:</span>
                 <span>0%</span>
               </div>
-              <div className="flex justify-between font-bold mt-3 pt-3 border-t">
+              <div className="flex justify-between font-bold mt-2 pt-2 border-t">
                 <span>TOTAL:</span>
                 <span>100%</span>
               </div>
             </div>
 
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-1.5">
               <p className="text-sm">Thank you for listening!</p>
               <p className="text-sm">================================</p>
               <p className="text-xs">spotify.com</p>
-              <div className="flex items-center justify-center gap-2 pb-2">
+              <div className="flex items-center justify-center gap-2 pb-1">
                 <p className="text-xs text-gray-500">made by anderson bee</p>
                 <a 
                   href="https://github.com/andybeecompsci" 

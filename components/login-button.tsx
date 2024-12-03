@@ -1,7 +1,7 @@
 "use client"
 
 const SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID
-const REDIRECT_URI = 'http://localhost:3000/api/auth/callback'
+const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI || 'http://localhost:3000/api/auth/callback'
 const SCOPES = [
   'user-top-read',
   'user-read-recently-played',

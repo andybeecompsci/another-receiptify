@@ -18,6 +18,7 @@ export function ShareButton() {
       const storyContainer = document.createElement('div')
       storyContainer.style.position = 'absolute'
       storyContainer.style.left = '-9999px'
+      // Instagram Story dimensions (1080 x 1920)
       storyContainer.style.width = '1080px'
       storyContainer.style.height = '1920px'
       storyContainer.style.backgroundColor = '#ffffff'
@@ -27,13 +28,13 @@ export function ShareButton() {
       
       // Clone the receipt content
       const receiptClone = receiptElement.cloneNode(true) as HTMLDivElement
-      receiptClone.style.transform = 'scale(1.2)'
-      receiptClone.style.transformOrigin = 'center center'
+      // Calculate scale to fit receipt in Instagram story width with padding
+      receiptClone.style.transform = 'scale(0.85)'
+      receiptClone.style.transformOrigin = 'top center'
       receiptClone.style.backgroundColor = '#ffffff'
-      receiptClone.style.width = '100%'
-      receiptClone.style.maxWidth = '800px'
-      receiptClone.style.margin = '0 auto'
-      receiptClone.style.padding = '40px'
+      receiptClone.style.width = '900px' // Slightly smaller than story width
+      receiptClone.style.margin = '100px auto'
+      receiptClone.style.padding = '20px'
       receiptClone.style.boxSizing = 'border-box'
       
       // Make all text black
@@ -41,7 +42,6 @@ export function ShareButton() {
       allText.forEach((element: Element) => {
         const el = element as HTMLElement
         el.style.color = '#000000'
-        // Preserve whitespace and line breaks
         el.style.whiteSpace = 'pre'
       })
       
@@ -52,22 +52,20 @@ export function ShareButton() {
       // Generate image
       const canvas = await html2canvas(storyContainer, {
         backgroundColor: '#ffffff',
-        scale: 2,
+        scale: 2, // Higher quality
         logging: false,
         useCORS: true,
         width: 1080,
         height: 1920,
         onclone: (doc) => {
-          // Additional fixes for cloned document if needed
           const clonedReceipt = doc.querySelector('#receipt')
           if (clonedReceipt) {
-            const elements = clonedReceipt.getElementsByTagName('*')
-            for (let el of elements) {
+            Array.from(clonedReceipt.getElementsByTagName('*')).forEach(el => {
               if (el instanceof HTMLElement) {
                 el.style.color = '#000000'
                 el.style.whiteSpace = 'pre'
               }
-            }
+            })
           }
         }
       })

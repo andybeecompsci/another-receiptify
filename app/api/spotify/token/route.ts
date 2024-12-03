@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-//comment
+//comment again
 const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET
 const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI

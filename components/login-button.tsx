@@ -30,9 +30,9 @@ export function LoginButton() {
   return (
     <button
       onClick={handleLogin}
-      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+      className="w-full bg-green-600 hover:bg-green-700 text-white font-mono py-3 px-6 rounded-lg border-2 border-green-700 shadow-lg transform active:scale-95 transition-all text-lg"
     >
-      Login with Spotify
+      PROCEED WITH SPOTIFY
     </button>
   )
 }

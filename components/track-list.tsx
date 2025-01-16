@@ -149,7 +149,7 @@ export function TrackList({
                 <img 
                   src="/spotify-logo.png" 
                   alt="Spotify" 
-                  className="h-4 w-4 object-contain"
+                  className="h-5 w-auto object-contain"
                 />
                 <span className="text-xs">Powered by Spotify</span>
               </div>

@@ -69,14 +69,6 @@ export function TrackList({
           {/* Header */}
           <div className="text-center border-b border-dashed pb-3">
             <h1 className="text-2xl font-bold mb-1">ANOTHER RECEIPTIFY</h1>
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <img 
-                src="/spotify-logo.png" 
-                alt="Spotify" 
-                className="h-6 w-6"
-              />
-              <span className="text-sm">Powered by Spotify</span>
-            </div>
             <p className="text-base">Order #{userProfile?.display_name
               ?.toLowerCase()
               .replace(/ee/g, 'e3')
@@ -153,7 +145,15 @@ export function TrackList({
                 className="h-12 w-full object-contain my-2"
               />
               <p className="text-xs">receiptify-two.vercel.app</p>
-              <div className="flex items-center justify-center gap-2 pb-1">
+              <div className="flex items-center justify-center gap-2">
+                <img 
+                  src="/spotify-logo.png" 
+                  alt="Spotify" 
+                  className="h-4 w-4 object-contain"
+                />
+                <span className="text-xs">Powered by Spotify</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 mt-1">
                 <p className="text-xs text-gray-500">made by anderson bee</p>
                 <a 
                   href="https://github.com/andybeecompsci" 

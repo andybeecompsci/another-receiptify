@@ -1,9 +1,11 @@
 interface Track {
   artist: string;
+  artistId?: string;
   popularity: number;
   genres: string;
   image?: string;
   topTrack?: string;
+  topTrackId?: string;
 }
 
 import { ShareButton } from './share-button'
@@ -67,6 +69,14 @@ export function TrackList({
           {/* Header */}
           <div className="text-center border-b border-dashed pb-3">
             <h1 className="text-2xl font-bold mb-1">ANOTHER RECEIPTIFY</h1>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <img 
+                src="/spotify-logo.png" 
+                alt="Spotify" 
+                className="h-6 w-6"
+              />
+              <span className="text-sm">Powered by Spotify</span>
+            </div>
             <p className="text-base">Order #{userProfile?.display_name
               ?.toLowerCase()
               .replace(/ee/g, 'e3')
@@ -95,11 +105,23 @@ export function TrackList({
               <div key={track.artist} className="grid grid-cols-[auto,1fr,auto] gap-4 items-start text-sm">
                 <span className="w-8">1x</span>
                 <div className="break-words">
-                  <span className="block font-bold">{track.artist}</span>
-                  {track.topTrack && (
-                    <span className="block text-gray-500 mt-0.5 break-words">
+                  <a 
+                    href={track.artistId ? `https://open.spotify.com/artist/${track.artistId}` : '#'} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block font-bold hover:text-green-500 transition-colors"
+                  >
+                    {track.artist}
+                  </a>
+                  {track.topTrack && track.topTrackId && (
+                    <a 
+                      href={`https://open.spotify.com/track/${track.topTrackId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-gray-500 mt-0.5 break-words hover:text-green-500 transition-colors"
+                    >
                       {track.topTrack}
-                    </span>
+                    </a>
                   )}
                 </div>
                 <span className="whitespace-nowrap">${(track.popularity / 10).toFixed(2)}</span>

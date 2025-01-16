@@ -14,13 +14,16 @@ interface UserProfile {
 
 interface Track {
   artist: string;
+  artistId?: string;
   popularity: number;
   genres: string;
   image?: string;
   topTrack?: string;
+  topTrackId?: string;
 }
 
 interface TopTrack {
+  id: string;
   name: string;
   artists: { id: string; name: string }[];
 }
@@ -141,10 +144,12 @@ export function ClientDashboard() {
           
           return {
             artist: artist.name,
+            artistId: artist.id,
             popularity: artist.popularity,
             genres: artist.genres.join(', '),
             image: artist.images[0]?.url,
-            topTrack: artistTracks.length > 0 ? artistTracks[0].name : undefined
+            topTrack: artistTracks.length > 0 ? artistTracks[0].name : undefined,
+            topTrackId: artistTracks.length > 0 ? artistTracks[0].id : undefined
           }
         })
 
